@@ -1,6 +1,4 @@
-{Robot, Adapter, Response} = require 'hubot'
-#Yup.
-{TextMessage, EnterMessage, LeaveMessage} = require '../../../src/message'
+{Robot, Adapter, TextMessage, EnterMessage, LeaveMessage, CatchAllMessage} = require 'hubot'
 
 # {Robot, Adapter, Response, TextMessage, EnterMessage, LeaveMessage} = require 'hubot'
 
@@ -34,10 +32,10 @@ class SkypeKitAdapter extends Adapter
             console.log "HUBOT-SKYPEKIT DEBUG: #{log} #{data}"
             return
 
-        user = self.userForName decoded.user
+        user = @robot.brain.userForName decoded.user
         unless user?
             id = (new Date().getTime() / 1000).toString().replace('.','')
-            user = self.userForId id
+            user = @robot.brain.userForId id
             user.name = decoded.user
         user.room = decoded.room
 
